@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="th">
+  <head>
+    <meta charset="utf-8" />
+    <title>A5 Camera Mode</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css"/>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="https://kit-pro.fontawesome.com/releases/v6.2.0/css/pro.min.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  </head>
+  <body style="background-color: rgba(0,0,0,0);">
+
+    <audio id="mousehover" src="audios/mousehover.mp3"></audio>
+    <audio id="screenshot" src="audios/screenshot.mp3"></audio>
+
+    <div class="container">
+      <div class="photomodecontainer">
+        <div class="photomodeinnercontainer">
+  
+          <div class="photomodeheader"></div>
+
+          <div class="panel">
+            <div class="photomodebottomcontainer">
+     
+              <div class="photomodefilterscontainer card">
+                <div class="photomodefilterscontainertitle">
+                  <span class="title"><i class="fa-solid fa-wand-magic-sparkles"></i> Filters</span>
+                  <input id="filtersearch" placeholder="Search filters..." type="text" class="cameramodesearch" spellcheck="false" />
+                </div>
+
+
+                <div class="photomodeslidercontainer">
+                  <i class="fa-solid fa-sliders-simple"></i>
+                  <div class="slidercontainer" id="movementfive"></div>
+                </div>
+
+     
+                <div class="photomodefiltersinnercontainer"></div>
+              </div>
+
+   
+              <div class="photomodebuttonscontainer">
+                <div class="photomodebuttons tooltip card" id="camerablur" data-tip="Toggle Blur">
+                  <i class="fa-solid fa-droplet"></i>
+                </div>
+                <div class="photomodebuttons tooltip card" id="resetcameramovement" data-tip="Reset">
+                  <i class="fa-solid fa-rotate-right"></i>
+                </div>
+                <div class="photomodebuttons tooltip primary card" id="takescreenshot" data-tip="Take Screenshot (Ctrl+C)">
+                  <i class="fa-solid fa-camera-viewfinder"></i>
+                </div>
+                <div class="photomodebuttons tooltip card" id="gallery" data-tip="Gallery">
+                  <i class="fa-solid fa-rectangle-history-circle-user"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flashingcontainer"></div>
+
+        <div class="photoeditcontainer">
+          <div class="photoeditinnercontainer card">
+            <div class="galleryheader">
+              <span class="title"><i class="fa-solid fa-bolt"></i> Latest screenshot</span>
+            </div>
+            <div class="photoeditimage"></div>
+            <div class="editphotobuttonscontainer">
+              <div class="editphotobutton" style="border-radius:1.2vh 0 0 1.2vh;"><i class="fa-sharp fa-solid fa-circle-xmark"></i> Cancel</div>
+              <div class="editphotobutton"><i class="fa-solid fa-clipboard"></i> Copy</div>
+              <div class="editphotobutton" style="border-radius:0 1.2vh 1.2vh 0;"><i class="fa-solid fa-floppy-disk"></i> Save</div>
+            </div>
+          </div>
+
+          <div class="savephotocontainer">
+            <div class="savephotoinnercontainer card">
+              <div class="galleryheader">
+                <span class="title"><i class="fa-solid fa-floppy-disk"></i> Save latest screenshot</span>
+                <div class="savingclosebutton" id="closesaving"><i class="fa-solid fa-circle-xmark"></i></div>
+              </div>
+              <input id="newpicturename" placeholder="Type your new photo name" type="text" class="cameramodesearch" spellcheck="false" />
+              <div class="savephotoconfirm">Confirm</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="gallerycontainer" style="display:none;">
+        <div class="gallerymodal card">
+          <div class="galleryheader">
+            <span class="title"><i class="fa-solid fa-images"></i> Gallery</span>
+            <input id="gallerysearch" placeholder="Search photos..." type="text" class="gallerysearch" spellcheck="false" />
+            <div class="galleryclose" id="closegallery" title="Close"><i class="fa-solid fa-circle-xmark"></i></div>
+          </div>
+          <div class="galleryinnercontainer">
+            <div class="galleryleftcontainer">
+              <div class="galleryactions">
+                <button class="galleryaction danger" id="galleryDelete" title="Delete">
+                  <i class="fa-solid fa-trash"></i><span>Delete</span>
+                </button>
+                <button class="galleryaction" id="galleryCopy" title="Copy URL">
+                  <i class="fa-solid fa-clipboard"></i><span>Copy</span>
+                </button>
+              </div>
+
+              <i class="fa-solid fa-image"></i>
+              <div class="galleryleftinnerimagecontainer">
+                <div class="galleryleftinnerimage"></div>
+              </div>
+            </div>
+            <div class="galleryrightcontainer"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="keyhints" style="display:none;">
+        <div class="keyhints-title"><i class="fa-solid fa-keyboard"></i> Keybinds</div>
+        <div class="keyhints-row">
+          <span class="keycap">W</span><span class="keycap">A</span><span class="keycap">S</span><span class="keycap">D</span>
+          <span class="keydesc">Move</span>
+        </div>
+        <div class="keyhints-row">
+          <span class="keycap">Space</span><span class="sep">/</span><span class="keycap">LCtrl</span>
+          <span class="keydesc">Up / Down</span>
+        </div>
+        <div class="keyhints-row">
+          <span class="keycap">Shift</span><span class="sep">/</span><span class="keycap">Alt</span>
+          <span class="keydesc">Faster / Slower</span>
+        </div>
+        <div class="keyhints-row">
+          <span class="keycap">Q</span><span class="sep">/</span><span class="keycap">E</span>
+          <span class="keydesc">Roll Left / Right</span>
+        </div>
+        <div class="keyhints-row">
+          <span class="keycap">H</span> <span class="keydesc">Toggle Free-Cam / Show UI</span>
+        </div>
+      </div>
+
+      <div class="tooltipcontainer"></div>
+    </div>
+
+    <script src="js/app.js" type="text/javascript"></script>
+  </body>
+</html>
